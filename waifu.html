@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Waifu - Koleksi MinIan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* ========== NAVIGATION WITH HAMBURGER ========== */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+            z-index: 20;
+        }
+
+        .hamburger span {
+            width: 30px;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+
+        /* Animasi Hamburger */
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Navigation Links */
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 1rem;
+        }
+
+        .nav-links a:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 80%;
+        }
+
+        .nav-links a.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        /* Back Button */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: white;
+            color: #333;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.2s;
+            text-decoration: none;
+            margin: 1rem 2rem;
+        }
+
+        .back-button:hover {
+            background: #f5f5f5;
+            border-color: #999;
+            transform: translateX(-5px);
+        }
+
+        .arrow {
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        /* ========== MAIN CONTAINER ========== */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Info halaman */
+        .page-info {
+            text-align: center;
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        /* ========== WAIFU GRID ========== */
+        .waifu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        /* ========== WAIFU CARD ========== */
+        .waifu-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .waifu-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .waifu-img {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            background: #f0f0f0;
+        }
+
+        .waifu-card:hover .waifu-img {
+            transform: scale(1.1);
+        }
+
+        .waifu-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .waifu-info h3 {
+            color: #333;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .waifu-info p {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .waifu-stats {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            color: #764ba2;
+            font-weight: 500;
+        }
+
+        .waifu-stats span {
+            background: #f3f3f3;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .btn-detail {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-detail:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* ========== PAGINATION ========== */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .page-btn {
+            padding: 0.8rem 1.2rem;
+            border: none;
+            background: white;
+            color: #333;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            min-width: 45px;
+            font-size: 1rem;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .page-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .page-nav {
+            padding: 0.8rem 1.5rem;
+            background: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .page-nav:hover:not(:disabled) {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .page-nav:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .page-dots {
+            color: white;
+            font-weight: bold;
+            padding: 0 0.5rem;
+        }
+
+        /* ========== MODAL ========== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #f0f0f0;
+        }
+
+        .close-modal:hover {
+            color: #ff4444;
+            background: #ffe0e0;
+        }
+
+        .modal-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            background: #f0f0f0;
+        }
+
+        .modal-body h2 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .modal-body p {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .modal-body ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .modal-body li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            color: #555;
+        }
+
+        .modal-body li:last-child {
+            border-bottom: none;
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: white;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* ========== RESPONSIVE DESIGN ========== */
+        
+        /* TABLET (max-width: 768px) */
+        @media screen and (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .logo span {
+                font-size: 1.3rem;
+            }
+
+            /* Tampilkan hamburger */
+            .hamburger {
+                display: flex;
+            }
+
+            /* Sembunyikan nav-links default */
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 1rem 0;
+                gap: 0.5rem;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                width: 90%;
+                text-align: center;
+                padding: 0.8rem;
+                margin: 0 auto;
+            }
+
+            .nav-links a::after {
+                display: none;
+            }
+
+            /* Header */
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+                padding: 0 20px;
+            }
+
+            /* Grid */
+            .waifu-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            /* Back button */
+            .back-button {
+                margin: 1rem;
+            }
+
+            /* Pagination */
+            .pagination {
+                gap: 0.3rem;
+            }
+
+            .page-btn {
+                padding: 0.6rem 1rem;
+                min-width: 40px;
+            }
+
+            .page-nav {
+                padding: 0.6rem 1rem;
+            }
+        }
+
+        /* MOBILE (max-width: 480px) */
+        @media screen and (max-width: 480px) {
+            .navbar {
+                padding: 0.8rem;
+            }
+
+            .logo span {
+                font-size: 1.2rem;
+            }
+
+            .hamburger span {
+                width: 25px;
+                height: 2px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .header p {
+                font-size: 0.9rem;
+            }
+
+            /* Grid 1 kolom di HP */
+            .waifu-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 0.5rem;
+            }
+
+            /* Card */
+            .waifu-img {
+                height: 500px;
+            }
+
+            .waifu-info {
+                padding: 1rem;
+            }
+
+            .waifu-info h3 {
+                font-size: 1.2rem;
+            }
+
+            .waifu-stats {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .waifu-stats span {
+                display: block;
+                width: 80%;
+                margin: 0 auto;
+            }
+
+            .btn-detail {
+                padding: 0.6rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            /* Pagination */
+            .pagination {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .page-btn {
+                padding: 0.5rem 0.8rem;
+                min-width: 35px;
+                font-size: 0.9rem;
+            }
+
+            .page-nav {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            /* Modal */
+            .modal-content {
+                padding: 1.5rem;
+            }
+
+            .modal-img {
+                height: 300px;
+            }
+
+            .modal-body h2 {
+                font-size: 1.3rem;
+            }
+
+            .modal-body p {
+                font-size: 0.9rem;
+            }
+
+            .modal-body li {
+                font-size: 0.9rem;
+            }
+
+            /* Back button */
+            .back-button {
+                padding: 8px 16px;
+                font-size: 14px;
+                margin: 0.5rem;
+            }
+
+            .arrow {
+                font-size: 18px;
+            }
+
+            /* Footer */
+            .footer {
+                padding: 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* SMALL MOBILE (max-width: 360px) */
+        @media screen and (max-width: 360px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .logo span {
+                font-size: 1rem;
+            }
+
+            .waifu-img {
+                height: 300px;
+            }
+
+            .modal-img {
+                height: 300px;
+            }
+
+            .back-button {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========== NAVBAR WITH HAMBURGER ========== -->
+    <nav class="navbar">
+        <div class="logo">
+            <span>✨ Waifu Collection ✨</span>
+        </div>
+
+        <!-- Hamburger Menu Icon -->
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="nav-links" id="navLinks">
+            <a href="#" class="active">Waifu</a>
+            <a href="about.html">About</a>
+            <a href="GALLER.html">Gallery</a>
+            <a href="contact.html">Contact</a>
+            <a href="voting Waifu.html">Voting</a>
+        </div>
+    </nav>
+
+    <!-- Back Button -->
+    <a href="mediatek.html" class="back-button">
+        <span class="arrow">←</span>
+        <span>Kembali ke Beranda</span>
+    </a>
+
+    <!-- ========== MAIN CONTAINER ========== -->
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>✨ Koleksi Waifu ✨</h1>
+            <p>Koleksi waifu terbaik pilihan untuk Anda. Satu per satu dengan detail lengkap!</p>
+        </div>
+
+        <!-- Info halaman -->
+        <div class="page-info" id="pageInfo"></div>
+
+        <!-- Grid waifu -->
+        <div class="waifu-grid" id="waifuGrid"></div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination"></div>
+    </div>
+
+    <!-- ========== MODAL DETAIL WAIFU ========== -->
+    <div class="modal" id="waifuModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Koleksi Waifu. Dibuat oleh Dilan Ryouga</p>
+    </div>
+
+    <!-- ========== MODAL DETAIL WAIFU ========== -->
+    <div class="modal" id="waifuModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Koleksi Waifu. Dibuat oleh Dilan Ryouga</p>
+    </div>
+
+    <script>
+        // Data waifu dengan placeholder images
+        const waifuData = [
+            {
+                id: 1,
+                name: "Kurodate Haruna",
+                anime: "Blue Archive",
+                image: "Haruna_Blue Archive.png",
+                age: "17 tahun",
+                height: "163 cm",
+                description: "Terdaftar di Akademi Gehenna, Haruna adalah presiden klub dari Perhimpunan Penelitian Kuliner. Pada pandangan pertama, orang mungkin mengira dia adalah seorang putri kaya yang anggun dan angkuh, tetapi jika dia diajak bicara tentang makanan, semua kesan keanggunan akan hilang pada sosok pencinta kuliner yang antusias ini. Berbeda dengan kerakusannya, sebenarnya dia bukanlah orang yang memiliki nafsu makan besar. Makanan favoritnya adalah makanan berlemak, kaya hormon, dan berkuah kental.",
+                details: [
+                    "Spesies: oni (iblis)",
+                    "Status: Hidup",
+                    "Birthday: 1 Maret",
+                    "Hobi: Mencari hal-hal yang lezat"
+                ]
+            },
+            {
+                id: 2,
+                name: "Yozakura Kirara",
+                anime: "Blue Archive",
+                image: "Kirara-Blue-Archive.png",
+                age: "16 tahun",
+                height: "159 cm",
+                description: "Kirara adalah seorang siswi SMA dengan kepribadian ceria dari Akademi Gehenna.",
+                details: [
+                    "Spesies: Oni (Iblis)",
+                    "Status: Hidup",
+                    "Senjata: AR",
+                    "Senjata: Chocolate & Strawberry"
+                ]
+            },
+            {
+                id: 3,
+                name: "Shirao Eri",
+                anime: "Blue Archive",
+                image: "Eri.png",
+                age: "16 tahun",
+                height: "158 cm",
+                description: "Eri adalah anggota Akademi Seni Wildhunt dan presiden Perhimpunan Penelitian Okultisme, yang meneliti hal-hal gaib yang terdapat dalam seni. Eri mengenakan topi besar dan membicarakan segala sesuatu dengan istilah magis. Dia sangat percaya bahwa kekuatan okultisme dapat meningkatkan nilai dan kemampuan artistiknya.",
+                details: [
+                    "Spesies: Manusia",
+                    "Status: Hidup",
+                    "Birthday: 31 Oktober",
+                    "Hobi: occult books"
+                ]
+            },
+            {
+                id: 4,
+                name: "Kyōyama Kazusa",
+                anime: "Blue Archive",
+                image: "https://static.wikitide.net/bluearchivewiki/3/36/Kazusa_%28Band%29.png",
+                age: "15 tahun",
+                height: "155 cm",
+                description: "Seorang anggota Klub Camilan Sepulang Sekolah Trinity Integrated Academy dengan kepribadian yang santai dan pendiam. Lebih suka menghindari sorotan, dia biasanya mengikuti anggota klub lainnya. Kazusa selalu kesulitan untuk larut dalam keanehan orang-orang di sekitarnya, tetapi dia juga menghargai momen-momen tersebut",
+                details: [
+                    "Spesies: Neko",
+                    "Status: Hidup",
+                    "Birthday: 5 Agustus",
+                    "Senjata: Mabinogion"
+                ]
+            },
+             {
+                id: 5,
+                name: "Azuma Himari",
+                anime: "Mato Seihei no Slave",
+                image: "https://i.pinimg.com/1200x/5c/a3/3b/5ca33b86713115002f0fd64484980477.jpg",
+                age: "19 Tahun",
+                height: "159 cm",
+                description: "penampilan: Himari adalah wanita muda cantik dan berlekuk tubuh, setahun lebih tua dari Yuuki Wakura, dengan rambut hijau laut gelap sepanjang punggung yang diikat pita di belakang kepalanya, poni panjang yang disisir ke sisi kanan kepalanya, dan mata berwarna amber. Baru-baru ini, tubuhnya menjadi lebih dewasa, seperti yang dicatat Yuuki. Sebagian besar waktu, dia terlihat mengenakan seragam Korps Anti-Iblis. Versi seragamnya mirip dengan milik Kyouka, kecuali dia mengenakan tunik lengan pendek. Himari diperkenalkan sebagai sosok yang dingin dan tidak mempercayai Yuuki Wakura saat pertemuan pertama mereka, karena ia hanyalah seorang pria, memperlakukannya sebagai sosok yang lebih rendah dibandingkan anggota Unit ke-7 dan memperlakukannya seperti budak, bahkan percaya bahwa ia seharusnya bersyukur atas keberadaannya. Ia memiliki banyak kesombongan dan kebanggaan pada dirinya sendiri, kekuatannya, dan anggota Unit ke-7, terutama terhadap Kyouka yang ia kagumi, karena itulah ia mudah marah. Meskipun ia bersikap bermusuhan terhadap Yuuki, menganggapnya tidak lebih dari seorang budak, ia mengakui bahwa Yuuki adalah individu yang sangat cakap di dalam maupun di luar pertempuran. Namun, Himari adalah orang pertama yang menyerangnya setiap kali ia tertangkap dalam berbagai situasi yang tidak senonoh, meskipun tidak disengaja seperti melihat mereka telanjang di kamar mandi atau sedang berpakaian. Karena masa kecilnya yang keras, dia pekerja keras, oleh karena itu, dia sering berlatih bersama Kyouka Uzen hampir sepanjang waktu dalam latihan tempur dan mengasah Berkat Buah Persiknya. Dia tidak pernah bermalas-malasan dalam tanggung jawabnya atau tidak mematuhi perintah, malah memarahi orang lain jika mereka melakukannya. Namun, dia bisa menjadi berapi-api di dalam dan di luar pertempuran, dipandang sebagai salah satu yang tidak cocok di antara Unit ke-7. Karena semua ini, Himari mudah merasa malu dan marah jika kemampuan atau latihannya dipertanyakan, terutama kakak perempuannya, Yachiho Azuma , karena kelemahannya. Keinginan terbesarnya adalah menjadi Pahlawan seperti Yuuki, tetapi Himari ingin menjadi seperti Kyouka dan menebus semua yang tidak dapat dia capai dibandingkan dengan saudara perempuannya. [ 3 ] Himari juga mudah gugup karena selama pertarungannya melawan Yachiho, dia memutuskan untuk menggunakan Yuuki sebagai budaknya, setelah menyadari hadiah yang harus dia berikan kepadanya, dia menjadi malu karena hadiah itu nakal. Namun, pada saat yang sama, selama pelatihan ini, dia mulai memandang Yuuki lebih positif dan mulai memandangnya lebih sebagai rekan dan teman. Telah diisyaratkan bahwa Himari mungkin juga memiliki perasaan tersembunyi terhadapnya karena dia berbagi ciuman pertamanya dengannya, yang bukan bagian dari hadiah yang diberikan kepadanya. Kemampuan unik: Learning – Dia punya kekuatan yang gokil: bisa meniru kekuatan orang lain yang pernah dia lihat, terus nyimpen dan pakai lewat smartphone. Jadi dia bisa pakai banyak gaya bertarung berbeda",
+                details: [
+                    "Spesies: Manusia",
+                    "Status: Hidup",
+                    "Birthday: 28 Agustus",
+                    "Hobi: menulis puisi"
+                ]
+            },
+            {
+             id: 6,
+                name: "Nekozuka Hibiki",
+                anime: "Blue Archive",
+                image: "https://static.wikitide.net/bluearchivewiki/thumb/b/bc/Hibiki.png/266px-Hibiki.png",
+                age: "15 tahun",
+                height: "154 cm",
+                description: "Hibiki bergabung dalam Klub Teknik di Sekolah Sains Millennium.",
+                details: [
+                    "Spesies: Manusia",
+                    "Status: Hidup",
+                    "Birthday: 2 APRIL",
+                    "Hobi: occult books"
+                ]
+            },
+            {
+              id: 7,
+                name: "Tenka Izumo",
+                anime: "Mato Seihei no Slave",
+                image: "https://i.pinimg.com/736x/57/ca/f5/57caf52298b873458db5273847f98228.jpg",
+                age: "21 Tahun",
+                height: "163 cm",
+                description: "Tenka adalah seorang wanita muda yang cantik dan bertubuh indah, memiliki mata biru dan rambut pirang pendek dengan bagian atas kepala berwarna putih. Sebagai Kepala Unit ke-6, dia sering mengenakan seragam Korps Anti-Setan, yang terdiri dari tunik milisi biru tua, topi dengan aksen merah, sarung tangan putih, celana pendek, dan sepatu bot setinggi paha. Dia pernah memakai dua set anting yang berbeda, anting tunggal dengan bulu di telinga kanannya dan anting liontin biru Tenka sering terlihat mengenakan pakaian sipil saat tidak sedang bertugas. Misalnya, sweter turtleneck ungu, kemeja hitam berkancing, rok putih, dan legging hitam. latar belakang: Tenka telah menjadi siswa teladan sejak kecil, tidak pernah gagal dalam hal apa pun. Dia tidak pernah tertarik pada anak laki-laki seusianya, dan meskipun memiliki banyak hobi dan minat di luar sekolah, hidupnya sering kali dipenuhi kebosanan setiap kali sendirian, bahkan setelah menjadi anggota Korps Anti-Iblis. Berkat Buah Persik Ame-no-Mitori ( , Ame-no-Mitori天御鳥命アメノミトリ (Secara harfiah berarti Kehidupan Burung Surgawi) : Berkat Buah Persik Tenka memberinya kekuatan manipulasi ruang. Dia dapat menciptakan lubang cacing untuk berteleportasi antar lokasi, dan mengubah ruang di sekitar lawannya dalam pertempuran, memungkinkannya untuk menyerang dari sudut yang tak terduga atau melewati pertahanan.",
+                details: [
+                    "Spesies: Manusia",
+                    "Status: Hidup",
+                    "Birthday: : 1 Oktober",
+                    "Hobi: menulis puisi"
+             
+                ]
+            },
+            {
+              id: 8,
+                name: "Odile",
+                anime: "Guardian Tales",
+                image: "https://i.pinimg.com/736x/5b/c5/6c/5bc56c5122e1b8c64d74493d8b9ec4bc.jpg",
+                age: "250 Tahun",
+                height: "163 cm",
+                description: "Odile adalah mantan petugas Kepolisian Dunia Iblis , yang kemudian bekerja sebagai detektif lepas bersama Gremory , setelah dia dipecat karena komentar rasis terhadap Android.",
+                details: [
+                    "Spesies: Demon",
+                    "Status: Hidup",
+                    "Birthday: : 1 Oktober",
+                    "Hobi: menulis puisi"
+             
+                ]
+            },            {
+                id: 9,
+                name: "Rikuhachima Aru",
+                anime: "Blue Archive",
+                image: "https://i.pinimg.com/1200x/4d/ae/d5/4daed5b7e2389c293eba7fc7ba11c0ec.jpg",
+                age: "16 tahun",
+                height: "160 cm",
+                description: "Presiden Problem Solver 68 yang mengangkat dirinya sendiri di Akademi Gehenna, melakukan berbagai macam bisnis ilegal sesuka hatinya. (ide dari: jeki)",
+                details: [
+                    "Spesies: Demon",
+                    "Status: Hidup",
+                    "Birthday: 12 Maret",
+                    "Hobi: studying management"
+                    
+                ]
+            },
+                        {
+              id: 10,
+                name: "Maki Zenin",
+                anime: "Jujur Kasihan",
+                image: "Maki zenin.jpg",
+                age: "17 Tahun",
+                height: "170 cm",
+                description: "This peak fineshyt (ide dari: Just call me Hans)",
+                details: [
+                    "Spesies: manusia",
+                    "Status: Hidup",
+                    "Birthday: :january 20",
+                    "Hobi: idk"
+             
+                ]
+            },
+            {
+              id: 11,
+                name: "Omaga Hare",
+                anime: "Blue Archive",
+                image: "Hare.jpg",
+                age: "16 Tahun",
+                height: "153 cm",
+                description: "meski kelihatan malas malasan dia orang yang jarang banget jahil di grub nya",
+                details: [
+                    "Spesies: manusia",
+                    "Status: Hidup",
+                    "Birthday: :19 APRIL",
+                    "Hobi: Gaming"
+             
+               ]
+            },
+            {
+            id: 12,
+                name: "Yakumo Ezo",
+                anime: "Mato Seihei no Slave",
+                image: "yakumo ezo.png",
+                age: "Belum diketahui",
+                height: "157 cm",
+                description: "Yakumo adalah seorang wanita muda yang menarik berusia sekitar 20-an. Dia memiliki rambut hitam pendek dengan highlight ungu, dan mata merah. Yakumo juga memiliki tubuh yang berisi, dengan payudara besar dan tubuh yang kencang.",
+                details: [
+                    "Spesies: Manusia",
+                    "Status: Hidup",
+                    "Birthday: : 16 mei",
+                    "pekerjan: Kepala Unit ke-5",
+                ]
+            },
+            {
+            id: 13,
+               name: "Kyouka Uzen",
+               anime: "Mato Seihei no Slave",
+               image: "kyouka uzen.png",
+               age: "21 Tahun",
+               height: "167 cm",
+               description: "Kyouka adalah seorang wanita muda yang cantik, dengan rambut perak panjang hingga mencapai pahanya. Ia memiliki poni panjang yang menutupi dahinya, dan dua helai rambut menjuntai di kedua sisi kepalanya. Kyouka juga memiliki mata merah muda yang tajam, dan fisik yang menarik dengan dada yang besar Kyouka mengenakan seragam Korps Anti-Setan yang lebih formal saat bertugas, terdiri dari jaket biru tua berkancing ganda dan rok pendek. Jaket tersebut memiliki hiasan merah di bagian depan dan di bagian bawah, serta hiasan putih di sepanjang kerah. Kyouka juga memiliki epaulet dan lencana kerah berwarna emas di jaketnya, dan mengenakan ikat pinggang cokelat di pinggangnya untuk mengencangkan jaket.Berkat Buah Persik Rantai Abadi: Budak ( , Sureibu無窮の鎖スレイブ (Literal Rantai Abadi) adalah Berkat Buah Persik unik Kyouka. Berkat ini memungkinkan dia untuk membentuk kontrak perbudakan dengan makhluk hidup lain, mengeluarkan kemampuan fisik dan mental bawaan mereka.",
+               details: [
+                 "Spesies: Manusia",
+                 "Status: Hidup",
+                 "Birthday: 4 September",
+                 "pekerjan: Anti-Demon Corps 7th Unit",
+                 ]
+            },
+                        {
+                id: 14,
+                name: "Konuri Maki",
+                anime: "Blue Archive",
+                image: "Maki.jpg",
+                age: "15 tahun",
+                height: "149 cm",
+                description: "Seorang anggota Veritas, sebuah kelompok peretas di Millennium Science School. Seorang siswi nakal yang gemar menggambar grafiti dan mendesain lambang Veritas. Dia memiliki kepribadian yang plin-plan dan tidak menganggap serius apa pun, yang sering memicu konflik dengan klub lain.",
+                details: [
+                    "Spesies: Manusia",
+                    "Status: Hidup",
+                    "Senjata: MG",
+                    "Senjata: Auto Lacquer"
+                ]
+            }
+            
+
+        ];
+
+        // Fungsi toggle menu
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.querySelector('.hamburger');
+            
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.querySelector('.hamburger');
+            
+            if (!navLinks.contains(event.target) && !hamburger.contains(event.target)) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+
+        // Close menu on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                const navLinks = document.getElementById('navLinks');
+                const hamburger = document.querySelector('.hamburger');
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+
+        // Render grid waifu
+        function renderWaifuGrid() {
+            const grid = document.getElementById('waifuGrid');
+            grid.innerHTML = waifuData.map(waifu => `
+                <div class="waifu-card" onclick="showWaifuDetail(${waifu.id})">
+                    <img src="${waifu.image}" alt="${waifu.name}" class="waifu-img" onerror="this.src='https://via.placeholder.com/400x300/cccccc/ffffff?text=Image+Not+Found'">
+                    <div class="waifu-info">
+                        <h3>${waifu.name}</h3>
+                        <p>${waifu.anime}</p>
+                        <div class="waifu-stats">
+                            <span>${waifu.age}</span>
+                            <span>${waifu.height}</span>
+                        </div>
+                        <button class="btn-detail" onclick="event.stopPropagation(); showWaifuDetail(${waifu.id})">Lihat Detail</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Konfigurasi pagination
+        const itemsPerPage = 6; // 6 waifu per halaman
+        let currentPage = 1;
+        const totalPages = Math.ceil(waifuData.length / itemsPerPage);
+
+        // Fungsi toggle menu
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.querySelector('.hamburger');
+            
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.querySelector('.hamburger');
+            
+            if (!navLinks.contains(event.target) && !hamburger.contains(event.target)) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+
+        // Close menu on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                const navLinks = document.getElementById('navLinks');
+                const hamburger = document.querySelector('.hamburger');
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+
+        // Render waifu berdasarkan halaman
+        function renderWaifuByPage(page) {
+            const grid = document.getElementById('waifuGrid');
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageData = waifuData.slice(startIndex, endIndex);
+
+            grid.innerHTML = pageData.map(waifu => `
+                <div class="waifu-card" onclick="showWaifuDetail(${waifu.id})">
+                    <img src="${waifu.image}" alt="${waifu.name}" class="waifu-img" onerror="this.src='https://via.placeholder.com/400x300/cccccc/ffffff?text=Image+Not+Found'">
+                    <div class="waifu-info">
+                        <h3>${waifu.name}</h3>
+                        <p>${waifu.anime}</p>
+                        <div class="waifu-stats">
+                            <span>${waifu.age}</span>
+                            <span>${waifu.height}</span>
+                        </div>
+                        <button class="btn-detail" onclick="event.stopPropagation(); showWaifuDetail(${waifu.id})">Lihat Detail</button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Update info halaman
+            document.getElementById('pageInfo').innerHTML = 
+                `Halaman ${page} dari ${totalPages} (Total ${waifuData.length} waifu)`;
+        }
+
+        // Render pagination
+        function renderPagination() {
+            const pagination = document.getElementById('pagination');
+            let html = '';
+
+            // Tombol Previous
+            html += `<button class="page-nav" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>« Prev</button>`;
+
+            // Logika untuk menampilkan nomor halaman
+            const maxVisiblePages = 5; // Maksimal 5 nomor halaman yang terlihat
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+
+            // Tombol First (jika perlu)
+            if (startPage > 1) {
+                html += `<button class="page-btn" onclick="changePage(1)">1</button>`;
+                if (startPage > 2) {
+                    html += `<span class="page-dots">...</span>`;
+                }
+            }
+
+            // Nomor halaman
+            for (let i = startPage; i <= endPage; i++) {
+                html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+            }
+
+            // Tombol Last (jika perlu)
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    html += `<span class="page-dots">...</span>`;
+                }
+                html += `<button class="page-btn" onclick="changePage(${totalPages})">${totalPages}</button>`;
+            }
+
+            // Tombol Next
+            html += `<button class="page-nav" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>Next »</button>`;
+
+            pagination.innerHTML = html;
+        }
+
+        // Fungsi ganti halaman
+        function changePage(page) {
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            renderWaifuByPage(currentPage);
+            renderPagination();
+            
+            // Scroll ke atas halaman
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Tampilkan detail waifu di modal
+        function showWaifuDetail(id) {
+            const waifu = waifuData.find(w => w.id === id);
+            if (!waifu) return;
+
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <img src="${waifu.image}" alt="${waifu.name}" class="modal-img" onerror="this.src='https://via.placeholder.com/500x300/cccccc/ffffff?text=Image+Not+Found'">
+                <div class="modal-body">
+                    <h2>${waifu.name}</h2>
+                    <p><strong>Anime:</strong> ${waifu.anime}</p>
+                    <p><strong>Usia:</strong> ${waifu.age}</p>
+                    <p><strong>Tinggi:</strong> ${waifu.height}</p>
+                    <p>${waifu.description}</p>
+                    <h3>Detail Lengkap:</h3>
+                    <ul>
+                        ${waifu.details.map(detail => `<li>${detail}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+
+            document.getElementById('waifuModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Tutup modal
+        function closeModal() {
+            document.getElementById('waifuModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            renderWaifuByPage(currentPage);
+            renderPagination();
+        });
+
+        document.getElementById('closeModal').addEventListener('click', closeModal);
+
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('waifuModal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Handle escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</div>
+</html>
